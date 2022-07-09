@@ -1,26 +1,44 @@
-import React from "react";
+import { func } from "prop-types";
+import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
 
-//create your first component
 const Home = () => {
+
+	const [inputText, setInputText] = useState([]);
+	
+const borrar = ()=>{
+	e.target.parentElement.style.display = none
+	 console.log(e.target.value)
+}
+
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
-		</div>
+	<div className="container">
+		<h1>Todo</h1>
+		<input type="text" 	onKeyDown={(e)=>{
+							if( e.key === "Enter"){
+							setInputText([...inputText, e.target.value])
+							
+							}
+
+							}}
+							className="form-control" 
+							placeholder="Username" aria-label="Username" 
+							aria-describedby="basic-addon1"/>
+		<ul>
+
+		{inputText.map((texto,index)=>{return(
+			<li key={index}>{texto}
+					<button 
+					type="button" 
+					className="btn-close"
+					onClick={(e)=> e.target.parentElement.style.display = "none"}></button></li>
+					
+		)})}
+		</ul>
+
+	</div>
 	);
 };
 
 export default Home;
+
