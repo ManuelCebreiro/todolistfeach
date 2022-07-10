@@ -1,5 +1,28 @@
-.caja{
-    width: 400px;
-    height: 400px;
-    background-color: yellow;
+body{
+    background: rgb(245, 245, 245);
+    /* background-color: antiquewhite; */
 }
+.form-control {
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 1px solid #ced4da;
+}
+.form-control:focus{
+    border-color: green;
+    box-shadow: 0px,
+}
+
+button{
+    background-color: aquamarine;
+    float: right;
+}
+.list-group-item{
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    text-align: left;
+    
+ 
+ }
