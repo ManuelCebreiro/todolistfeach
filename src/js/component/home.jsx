@@ -10,6 +10,7 @@ const Home = () => {
 	return (
 		<div className="container text-center">
 			<h1 className="container d-flex justify-content-center text-center col-8 bi bi-x-lg">TODOS</h1>
+			<div className="container d-flex justify-content-center text-center mb-3"><button type="button" class="btn btn-danger">Borrar</button></div>
 			<div className="container shadow p-1 bg-white rounded col-8 bi bi-x-lg">
 			<input type="text" value={inputValue} onChange={(e) => setinputValue(e.target.value)} onKeyDown={(e) => {
 
