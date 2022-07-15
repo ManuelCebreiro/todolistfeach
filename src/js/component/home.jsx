@@ -4,36 +4,77 @@ import { func } from "prop-types";
 
 const Home = () => {
 
+	const url = 'https://assets.breatheco.de/apis/fake/todos/user/man';
+
 	const [inputText, setInputText] = useState([]);
 	const [inputValue, setinputValue] = useState();
 
-const get = () =>{       													//funcion para traerme datos a traves de la api
-fetch('http://assets.breatheco.de/apis/fake/todos/user/manuelcebreiro',{
-	method: "GET",
-	headers: {
-	  "Content-Type": "application/json"
-	}})
-.then(respuesta => {return respuesta.json();}) 		//convertir los datos llamados en texto legible para mi pagina
-.then(data => setInputText(data))   				//actualizar mi inputText con los datos ya legibles de la api
 
-}
+	const get = ()=>{
+		fetch(url, {
+		  method: "GET",
+		  headers: {
+			"Content-Type": "application/json"
+		  }
+		})
+		.then(resp => {return resp.json();})
+		.then(data => 
+		setInputText(data))
+		.catch(error => {
+			//manejo de errores
+			console.log(error)
+	
+		}
+		);}
+	
+
 
 useEffect(() => {
 	get()
   },[]);
 
-const put = () =>{
-fetch("http://assets.breatheco.de/apis/fake/todos/user/manuelcebreiro",{
-	method: "PUT",
-	body: JSON.stringify(inputText),
+const newUser = () =>{
+fetch(url,{
+	method: "GET",
+	body: JSON.stringify([]),    //con esto creo un nuevo usuario. Porque me piden un array vacio para crearlo
 	headers: {
 	  "Content-Type": "application/json"
-	}})
-
-.then(respuesta => {if(respuesta.ok) get() })
-
+	}
+})
 }
 
+const actualizarlista = () =>{
+fetch(url,{
+	method: "PUT",
+	headers: {
+		"Content-Type": "application/json"
+	  },
+	body: JSON.stringify([...inputText, {label :inputValue, done : false}]),
+	})
+.then(respuesta => {
+	if(respuesta.ok)
+	get()
+})
+.catch(error=> 
+	console.log("no funciona hay un error")
+	)
+}
+
+
+
+
+// .then(reponse => {
+// 	if (!reponse.ok)
+// 		throw new Error ("No existe el usuario")
+// })
+// .then(data =>{
+// 	setInputText([...data])
+// 	console.log("Se han descargado las tareas")
+// })
+// .catch(error=>
+// 	console.log(error)
+// 	newUser()
+// 	)
 
 
 
@@ -43,15 +84,17 @@ fetch("http://assets.breatheco.de/apis/fake/todos/user/manuelcebreiro",{
 			<h1 className="container d-flex justify-content-center text-center col-8 bi bi-x-lg">TODOS</h1>
 			<div className="container d-flex justify-content-center text-center mb-3"><button type="button" className="btn btn-danger">Borrar</button></div>
 			<div className="container shadow p-1 bg-white rounded col-8 bi bi-x-lg">
-			<input type="text" value={inputValue} onChange={(e) => setinputValue(e.target.value)} onKeyDown={(e) => {
+			<input type="text" value={inputValue} onChange={(e) => setinputValue(e.target.value)} 
+			
+				onKeyDown={(e) => {
 
 				let array = Array.from(e.target.value);
 				let filterarray = array.filter(words => words !== " ");
 
 				if (e.key === "Enter" && filterarray.length) {
-					setInputText([...inputText, e.target.value]);
+					actualizarlista()					
+					setInputText([...inputText, {label : e.target.value, done : false}]);
 					setinputValue("")
-					put()
 				}
 			}}
 				className="form-control"
