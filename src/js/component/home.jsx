@@ -49,6 +49,7 @@ const Home = () => {
 
 	useEffect(() => {
 		get()
+		newUser()
 	}, []);
 
 	const actualizarlista = (data) => {
